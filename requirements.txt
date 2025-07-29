@@ -1,1 +1,5 @@
 streamlit
+firebase-admin
+google-cloud-storage
+pandas
+python-dotenv
