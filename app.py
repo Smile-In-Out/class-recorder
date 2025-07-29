@@ -8,7 +8,6 @@ import datetime
 import os, json
 
 
-
 # Firebase 초기화 (Streamlit Cloud에서는 환경 변수 사용 권장)
 if not firebase_admin._apps:
     firebase_key = json.loads(os.environ["FIREBASE_KEY"])
