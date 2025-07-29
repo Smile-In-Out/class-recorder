@@ -6,15 +6,19 @@ from google.cloud import storage as gcs
 import pandas as pd
 import datetime
 import os, json
-
+import json
 
 # Firebase 초기화 (Streamlit Cloud에서는 환경 변수 사용 권장)
 if not firebase_admin._apps:
-    firebase_key = json.loads(os.environ["FIREBASE_KEY"])
-    cred = credentials.Certificate(firebase_key)
-    firebase_admin.initialize_app(cred, {
-        'storageBucket': 'class-recorder-4023f.firebasestorage.app'
-    })
+    try:
+        firebase_key = json.loads(os.environ["FIREBASE_KEY"])
+        cred = credentials.Certificate(firebase_key)
+        firebase_admin.initialize_app(cred, {
+            'storageBucket': os.environ.get("FIREBASE_STORAGE_BUCKET")
+        })
+    except KeyError as e:
+        st.error("환경 변수 'FIREBASE_KEY' 또는 'FIREBASE_STORAGE_BUCKET'이 설정되지 않았습니다.")
+        st.stop()
 
 db = firestore.client()
 bucket = storage.bucket()
